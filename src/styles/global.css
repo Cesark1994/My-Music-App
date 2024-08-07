@@ -1,0 +1,50 @@
+:root {
+    --primary-color: #1db954;
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --accent-color: #535353;
+    --light-background-color: #ffffff;
+    --light-text-color: #000000;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  header {
+    background-color: var(--primary-color);
+    padding: 15px;
+  }
+  
+  header nav a {
+    color: var(--text-color);
+    margin: 0 10px;
+  }
+  
+  button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: var(--accent-color);
+  }
+  
+  .card {
+    background-color: var(--accent-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .card:hover {
+    background-color: var(--primary-color);
+  }
+  

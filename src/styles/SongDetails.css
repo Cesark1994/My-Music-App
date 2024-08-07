@@ -1,0 +1,13 @@
+.song-details {
+    padding: 20px;
+  }
+  
+  .song-details h1 {
+    font-size: 2.5em;
+  }
+  
+  .song-details p {
+    font-size: 1.2em;
+    margin: 10px 0;
+  }
+  

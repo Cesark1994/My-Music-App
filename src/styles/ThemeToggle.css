@@ -1,0 +1,22 @@
+body.light-mode {
+    background-color: var(--light-background-color);
+    color: var(--light-text-color);
+  }
+  
+  body.light-mode header {
+    background-color: var(--light-background-color);
+  }
+  
+  body.light-mode nav a {
+    color: var(--light-text-color);
+  }
+  
+  body.light-mode .card {
+    background-color: var(--light-background-color);
+  }
+  
+  body.light-mode button {
+    background-color: var(--light-background-color);
+    color: var(--light-text-color);
+  }
+  

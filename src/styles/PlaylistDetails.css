@@ -1,0 +1,14 @@
+.playlist-details {
+    padding: 20px;
+  }
+  
+  .playlist-details h1 {
+    font-size: 2.5em;
+  }
+  
+  .playlist-songs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  

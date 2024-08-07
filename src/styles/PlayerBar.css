@@ -1,0 +1,33 @@
+/* PlayerBar.css */
+.player-bar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #282828;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .player-bar__info {
+    margin-left: 20px;
+  }
+  
+  .player-bar__controls {
+    margin-right: 20px;
+  }
+  
+  .player-bar__controls button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .player-bar__controls button:hover {
+    color: #1db954;
+  }
+  

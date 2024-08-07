@@ -1,0 +1,26 @@
+.playlist-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .playlist-form input,
+  .playlist-form textarea,
+  .playlist-form button {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  .playlist-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .playlist-form button:hover {
+    background-color: #0056b3;
+  }
+  

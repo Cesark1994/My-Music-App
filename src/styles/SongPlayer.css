@@ -1,0 +1,16 @@
+/* src/styles/SongPlayer.css */
+.song-player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  .song-player button {
+    background-color: #1db954;
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+  }
+  

@@ -1,0 +1,14 @@
+.songs {
+    padding: 20px;
+  }
+  
+  .songs h1 {
+    font-size: 2em;
+  }
+  
+  .songs .songs-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
