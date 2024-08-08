@@ -44,7 +44,7 @@ function Login() {
                     {/* Formulario de inicio de sesión */}
                     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
                         <div className="field">
-                            <label htmlFor="username">Nombre de usuario:</label>
+                            <label htmlFor="username" style={{ fontWeight: 'bold' }}>Nombre de usuario</label>
                             <div className="control has-icons-left">
                                 <input
                                     className="input"
@@ -54,6 +54,7 @@ function Login() {
                                     ref={usernameRef}
                                     required
                                     style={{ width: '100%', padding: '0.5em', marginBottom: '1em' }}
+                                    placeholder="nombre de usuario"
                                 />
                                 <span className="icon is-small is-left">
                                     <i className="fas fa-user"></i>
@@ -61,7 +62,7 @@ function Login() {
                             </div>
                         </div>
                         <div className="field">
-                            <label htmlFor="password">Contraseña:</label>
+                            <label htmlFor="password"style={{ fontWeight: 'bold' }}>Contraseña</label>
                             <div className="control has-icons-left">
                                 <input
                                     className="input"
@@ -71,8 +72,10 @@ function Login() {
                                     ref={passwordRef}
                                     required
                                     style={{ width: '100%', padding: '0.5em', marginBottom: '1em' }}
+                                    placeholder="contraseña"
                                 />
-                                <span className="icon is-small is-left">
+                                <span
+                                className="icon is-small is-left">
                                     <i className="fas fa-lock"></i>
                                 </span>
                             </div>
@@ -82,9 +85,13 @@ function Login() {
                                 <button
                                     type="submit"
                                     className="button is-primary is-fullwidth"
-                                    style={{ backgroundColor: '#1DB954', color: '#fff', padding: '0.75em' }}
-                                >
-                                    Enviar
+                                    style={{ width: '100%', backgroundColor: '#1DB954',
+                                        fontWeight: 'bold',color: '#000000', padding: '0.75em', marginBottom: '1em',borderRadius: '50px',}}>
+                                    Iniciar sesión
+                                    <span
+                                className="icon is-small is-left">
+                                    <i className="fas fa-lock"></i>
+                                </span>
                                 </button>
                                 {/* Muestra un mensaje de carga si isLoading es verdadero */}
                                 {isLoading && <p>Cargando...</p>}
