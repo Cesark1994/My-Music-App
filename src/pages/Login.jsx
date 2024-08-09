@@ -38,8 +38,19 @@ function Login() {
 
     return (
         // Sección principal del componente Login con estilos en línea
-        <section className="section" style={{ backgroundColor: '#191414', color: '#1DB954', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <div className="columns is-centered">
+        <section className="section" style={{ backgroundColor: '#191414',
+                                            color: '#1DB954', 
+                                            minHeight: '100vh', 
+                                            display: 'flex', 
+                                            justifyContent: 'center', 
+                                            alignItems: 'center' }}>
+            <div className="columns is-centered"style={{
+                    border: '2px solid #1DB954',
+                    borderRadius: '10px',
+                    padding: '30px',
+                    maxWidth: '325px',
+                    width: '100%'
+                }}>
                 <div className="column is-4">
                     {/* Formulario de inicio de sesión */}
                     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -53,7 +64,7 @@ function Login() {
                                     name="username"
                                     ref={usernameRef}
                                     required
-                                    style={{ width: '100%', padding: '0.5em', marginBottom: '1em' }}
+                                    style={{ width: '100%', padding: '0.5em', marginBottom: '1em', fontWeight: 'bold'}}
                                     placeholder="nombre de usuario"
                                 />
                                 <span className="icon is-small is-left">
@@ -71,7 +82,7 @@ function Login() {
                                     name="password"
                                     ref={passwordRef}
                                     required
-                                    style={{ width: '100%', padding: '0.5em', marginBottom: '1em' }}
+                                    style={{ width: '100%', padding: '0.5em', marginBottom: '1em', fontWeight: 'bold'}}
                                     placeholder="contraseña"
                                 />
                                 <span
@@ -86,7 +97,9 @@ function Login() {
                                     type="submit"
                                     className="button is-primary is-fullwidth"
                                     style={{ width: '100%', backgroundColor: '#1DB954',
-                                        fontWeight: 'bold',color: '#000000', padding: '0.75em', marginBottom: '1em',borderRadius: '50px',}}>
+                                        fontWeight: 'bold',color: '#000000', padding: '0.75em', 
+                                        marginBottom: '1em',borderRadius: '50px',
+                                        boxSizing: 'border-box'}}>
                                     Iniciar sesión
                                     <span
                                 className="icon is-small is-left">
