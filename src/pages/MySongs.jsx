@@ -55,7 +55,10 @@ const MySongs = () => {
           <li key={song.id} style={{ marginBottom: '10px' }}>
             <span>{song.title}</span> {/* Muestra el título de la canción */}
             <SongPlayer song={song} /> {/* Renderiza el componente SongPlayer */}
-            <button onClick={() => handleDelete(song.id)} style={{ marginLeft: '10px' }}>Delete</button> {/* Botón para eliminar la canción */}
+            <button onClick={() => handleDelete(song.id)} 
+            style={{ marginLeft: '10px'}}>
+            Delete
+            </button> {/* Botón para eliminar la canción */}
           </li>
         ))}
       </ul>
