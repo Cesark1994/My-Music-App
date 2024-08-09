@@ -19,15 +19,31 @@ const Header = () => {
           borderRadius: '50px', // Hace que el botón sea ovalado
           padding: '10px 20px',  // Espaciado interno
           border: 'none',        // Sin borde
-          backgroundColor: '#007BFF', // Color de fondo
-          color: '#fff',         // Color del texto
+          backgroundColor: 'white', // Color de fondo
+          color: '#191414',         // Color del texto
           cursor: 'pointer',     // Cambia el cursor al pasar sobre el botón
-          fontSize: '16px'       // Tamaño del texto
+          fontSize: '16px' ,     // Tamaño del texto
+          fontWeight: 'bold'
         }}
         >Log out</button>
       ) : (
         // Mostrar enlace de login si no está autenticado
-        <a href="/login" aria-label="Sign in">Sign in</a>
+        <a href="/login" aria-label="Sign in"
+        style={{
+          display: 'inline-block',
+          borderRadius: '50px',
+          padding: '10px 20px',
+          textDecoration: 'none',
+          backgroundColor: 'white',
+          color: '#191414',
+          cursor: 'pointer',
+          fontSize: '16px',
+          textAlign: 'center',
+          lineHeight: '1.5',
+          transition: 'background-color 0.3s',
+          fontWeight: 'bold'
+        }}
+        >Sign in</a>
       )}
     </header>
   );
