@@ -1,6 +1,10 @@
 .home {
     text-align: center;
     padding: 20px;
+    background-image: url('https://w0.peakpx.com/wallpaper/411/929/HD-wallpaper-colorful-music-note-headphone-background-music.jpg');
+    background-size: cover; /* Cubre todo el contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat;
   }
   
   .home h1 {
