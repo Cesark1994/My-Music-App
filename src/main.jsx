@@ -1,3 +1,4 @@
+// main.jsk es el punto de entrada de la aplicación, donde se monta la aplicación en el DOM y se envuelve en los proveedores de contexto necesarios para la aplicación.
 import React from 'react'; // Importa React
 import { createRoot } from 'react-dom/client'; // Importa createRoot desde react-dom/client para crear el root de la aplicación
 import { BrowserRouter } from 'react-router-dom'; // Importa BrowserRouter desde react-router-dom para manejar las rutas
