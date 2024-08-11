@@ -16,13 +16,14 @@ const PlayerBar = () => {
           {/* Contenedor de la información de la pista */}
           <div className="player-bar__info">
             {/* Muestra el título de la pista actual */}
-            <p>{currentTrack.title}</p>
+            <p className="player-bar__title">{currentTrack.title}</p>
           </div>
           {/* Contenedor de los controles del reproductor */}
           <div className="player-bar__controls">
             {/* Botón para reproducir o pausar la pista actual */}
-            <button onClick={() => (isPlaying ? pauseTrack() : playTrack(currentTrack))}>
-              {isPlaying ? 'Pause' : 'Play'}
+            <button onClick={() => (isPlaying ? pauseTrack() : playTrack(currentTrack))}
+              aria-label={isPlaying ? 'Pause' : 'Play'}>
+                {isPlaying ? 'Pause' : 'Play'}
             </button>
           </div>
         </>
