@@ -13,6 +13,7 @@ import Player from './components/Player'; // Importa el componente Player
 import { MusicPlayerProvider } from './context/MusicPlayerProvider'; // Importa el proveedor de contexto MusicPlayerProvider
 import PlayerBar from './components/PlayerBar'; // Importa el componente PlayerBar
 import SongList from './components/SongList'; // Importa el componente SongList
+import ProtectedRoute from './components/ProtectedRoute'; // Importa el componente ProtectedRoute
 
 // Define el componente funcional App
 function App() {
@@ -24,12 +25,47 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} /> {/* Ruta para el componente Home */}
         <Route path="/login" element={<Login />} /> {/* Ruta para el componente Login */}
-        <Route path="/profile" element={<Profile />} /> {/* Ruta para el componente Profile */}
-        <Route path="/songs" element={<Songs />} /> {/* Ruta para el componente Songs */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        /> {/* Ruta protegida para el componente Profile */}
+        <Route
+          path="/songs"
+          element={
+            <ProtectedRoute>
+              <Songs />
+            </ProtectedRoute>
+          }
+        /> {/* Ruta protegida para el componente Songs */}
         <Route path="/songlist" element={<SongList />} /> {/* Nueva ruta para el componente SongList */}
-        <Route path="/songs/:id" element={<SongDetails />} /> {/* Ruta para el componente SongDetails con parámetro id */}
-        <Route path="/playlists" element={<Playlists />} /> {/* Ruta para el componente Playlists */}
-        <Route path="/playlists/:id" element={<PlaylistDetails />} /> {/* Ruta para el componente PlaylistDetails con parámetro id */}
+        <Route
+          path="/songs/:id"
+          element={
+            <ProtectedRoute>
+              <SongDetails />
+            </ProtectedRoute>
+          }
+        /> {/* Ruta protegida para el componente SongDetails con parámetro id */}
+        <Route
+          path="/playlists"
+          element={
+            <ProtectedRoute>
+              <Playlists />
+            </ProtectedRoute>
+          }
+        /> {/* Ruta protegida para el componente Playlists */}
+        <Route
+          path="/playlists/:id"
+          element={
+            <ProtectedRoute>
+              <PlaylistDetails />
+            </ProtectedRoute>
+          }
+        /> {/* Ruta protegida para el componente PlaylistDetails con parámetro id */}
         <Route path="*" element={<NotFound />} /> {/* Ruta para el componente NotFound para manejar rutas no encontradas */}
       </Routes>
       <PlayerBar /> {/* Renderiza el componente PlayerBar, asegúrate de que esté ubicado donde debe ser visible */}

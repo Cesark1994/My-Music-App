@@ -1,62 +1,83 @@
+# My Music App
 
-#### Descripción del Proyecto
-Este proyecto es una aplicación de música construida con React, Vite y utiliza npm para la gestión de paquetes. La aplicación permite a los usuarios autenticarse, ver listas de reproducción, reproducir canciones y gestionar su biblioteca de música.
+My Music App es una aplicación de música que permite a los usuarios buscar, reproducir y gestionar canciones y listas de reproducción. A continuación se describen las funcionalidades principales y la estructura del proyecto.
 
-#### Estructura de Archivos
+## Funcionalidades
 
-1. **App.jsx**
-   - **Descripción:** Componente principal de la aplicación que define las rutas y renderiza los componentes principales como `Header`, `Player`, y `PlayerBar`.
-   - **Funcionalidad:** Maneja la navegación entre diferentes páginas de la aplicación utilizando [`react-router-dom`](command:_github.copilot.openSymbolFromReferences?%5B%22react-router-dom%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Ccesar%5C%5Cmy-music-app%5C%5Csrc%5C%5Ccontext%5C%5CMusicPlayerProvider.jsx%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fcesar%2Fmy-music-app%2Fsrc%2Fcontext%2FMusicPlayerProvider.jsx%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fcesar%2Fmy-music-app%2Fsrc%2Fcontext%2FMusicPlayerProvider.jsx%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A0%2C%22character%22%3A60%7D%7D%5D%5D "Go to definition").
+### Autenticación
+- **Login**: Permite a los usuarios iniciar sesión en la aplicación.
+- **Logout**: Permite a los usuarios cerrar sesión.
 
-2. **index.jsx**
-   - **Descripción:** Punto de entrada de la aplicación.
-   - **Funcionalidad:** Monta el componente principal `App` en el DOM y envuelve la aplicación en `BrowserRouter` y `AuthProvider` para manejar el enrutamiento y la autenticación.
+### Gestión de Canciones
+- **MySongs**: Muestra las canciones del usuario.
+- **SongDetails**: Muestra los detalles de una canción específica.
+- **SongPlayer**: Reproduce una canción seleccionada.
 
-3. **MusicPlayerProvider.jsx**
-   - **Descripción:** Proveedor de contexto para el reproductor de música.
-   - **Funcionalidad:** Proporciona el estado y las funciones necesarias para manejar la reproducción de música en toda la aplicación.
-   - **Funciones:** [`playSong`](command:_github.copilot.openSymbolFromReferences?%5B%22playSong%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Ccesar%5C%5Cmy-music-app%5C%5Csrc%5C%5Ccontext%5C%5CMusicPlayerProvider.jsx%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fcesar%2Fmy-music-app%2Fsrc%2Fcontext%2FMusicPlayerProvider.jsx%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fcesar%2Fmy-music-app%2Fsrc%2Fcontext%2FMusicPlayerProvider.jsx%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A12%2C%22character%22%3A8%7D%7D%5D%5D "Go to definition"), [`pauseSong`](command:_github.copilot.openSymbolFromReferences?%5B%22pauseSong%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Ccesar%5C%5Cmy-music-app%5C%5Csrc%5C%5Ccontext%5C%5CMusicPlayerProvider.jsx%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fcesar%2Fmy-music-app%2Fsrc%2Fcontext%2FMusicPlayerProvider.jsx%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fcesar%2Fmy-music-app%2Fsrc%2Fcontext%2FMusicPlayerProvider.jsx%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A18%2C%22character%22%3A8%7D%7D%5D%5D "Go to definition"), [`setCurrentSong`](command:_github.copilot.openSymbolFromReferences?%5B%22setCurrentSong%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Ccesar%5C%5Cmy-music-app%5C%5Csrc%5C%5Ccontext%5C%5CMusicPlayerProvider.jsx%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fcesar%2Fmy-music-app%2Fsrc%2Fcontext%2FMusicPlayerProvider.jsx%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fcesar%2Fmy-music-app%2Fsrc%2Fcontext%2FMusicPlayerProvider.jsx%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A8%2C%22character%22%3A22%7D%7D%5D%5D "Go to definition"), [`setIsPlaying`](command:_github.copilot.openSymbolFromReferences?%5B%22setIsPlaying%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Ccesar%5C%5Cmy-music-app%5C%5Csrc%5C%5Ccontext%5C%5CMusicPlayerProvider.jsx%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fcesar%2Fmy-music-app%2Fsrc%2Fcontext%2FMusicPlayerProvider.jsx%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fcesar%2Fmy-music-app%2Fsrc%2Fcontext%2FMusicPlayerProvider.jsx%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A9%2C%22character%22%3A20%7D%7D%5D%5D "Go to definition").
+### Gestión de Listas de Reproducción
+- **Playlists**: Muestra las listas de reproducción del usuario.
+- **PlaylistDetails**: Muestra los detalles de una lista de reproducción específica.
+- **PlaylistForm**: Permite crear y editar listas de reproducción.
 
-4. **api.js**
-   - **Descripción:** Archivo de configuración y funciones para interactuar con la API.
-   - **Funcionalidad:** Define funciones para autenticación, obtención de canciones, listas de reproducción, y manejo de tokens.
-   - **Funciones:** `login`, `logout`, `getSongs`, `getSongDetails`, `getPlaylists`, `getPlaylistDetails`, `createPlaylist`, `updatePlaylist`, `deleteSong`, `uploadSong`, `getMySongs`.
+### Búsqueda
+- **SearchBar**: Permite buscar canciones y listas de reproducción.
 
-5. **Songs.jsx**
-   - **Descripción:** Componente para mostrar y gestionar canciones.
-   - **Funcionalidad:** Permite a los usuarios ver la lista de canciones, reproducir, eliminar y subir nuevas canciones.
-   - **Funciones:** `handleDelete`, `handleUpload`, `handlePlay`.
+### Interfaz de Usuario
+- **Navbar**: Barra de navegación principal.
+- **Header**: Encabezado de la aplicación.
+- **Footer**: Pie de página de la aplicación.
+- **ThemeToggle**: Permite alternar entre modo claro y oscuro.
 
-6. **Otros Componentes Importados**
-   - **Home.jsx, Login.jsx, Profile.jsx, Playlists.jsx, PlaylistDetails.jsx, SongDetails.jsx, NotFound.jsx, Header.jsx, Player.jsx, PlayerBar.jsx, SongList.jsx**
-   - **Descripción:** Componentes individuales para diferentes páginas y funcionalidades de la aplicación.
-   - **Funcionalidad:** Cada componente maneja una parte específica de la interfaz de usuario y la lógica correspondiente.
+### Manejo de Errores
+- **ErrorBoundary**: Captura y muestra errores en la aplicación.
 
-#### Funcionalidades Faltantes y Mejoras
+### Otros Componentes
+- **Card**: Componente genérico para mostrar información en forma de tarjeta.
+- **SongCard**: Muestra información de una canción en forma de tarjeta.
+- **PlaylistCard**: Muestra información de una lista de reproducción en forma de tarjeta.
 
-1. **Autenticación y Autorización**
-   - **Faltante:** Implementar protección de rutas para que solo los usuarios autenticados puedan acceder a ciertas páginas.
-   - **Mejora:** Añadir manejo de errores y mensajes de feedback para el usuario durante el proceso de autenticación.
+## Estructura del Proyecto
 
-2. **Gestión de Estado Global**
-   - **Faltante:** Integrar un estado global más robusto utilizando herramientas como Redux o Context API para manejar el estado de la aplicación de manera más eficiente.
-   - **Mejora:** Optimizar el manejo del estado de reproducción de música para permitir la reproducción continua entre diferentes componentes.
-
-3. **Interfaz de Usuario**
-   - **Faltante:** Mejorar la interfaz de usuario con más estilos y componentes interactivos.
-   - **Mejora:** Añadir animaciones y transiciones para una mejor experiencia de usuario.
-
-4. **Manejo de Errores**
-   - **Faltante:** Implementar un manejo de errores más robusto en todas las solicitudes a la API.
-   - **Mejora:** Mostrar mensajes de error claros y útiles para el usuario final.
-
-5. **Optimización de Rendimiento**
-   - **Faltante:** Implementar técnicas de optimización como lazy loading para componentes y recursos.
-   - **Mejora:** Utilizar memoization y otros patrones de optimización para mejorar el rendimiento de la aplicación.
-
-6. **Pruebas Unitarias**
-   - **Faltante:** Añadir pruebas unitarias y de integración para asegurar la calidad del código.
-   - **Mejora:** Utilizar herramientas como Jest y React Testing Library para escribir y ejecutar pruebas.
+```plaintext
+src/
+├── components/
+│   ├── Card.jsx
+│   ├── Footer.jsx
+│   ├── Header.jsx
+│   ├── Navbar.jsx
+│   ├── Player.jsx
+│   ├── PlayerBar.jsx
+│   ├── PlaylistCard.jsx
+│   ├── PlaylistForm.jsx
+│   ├── SearchBar.jsx
+│   ├── SongCard.jsx
+│   ├── SongList.jsx
+│   ├── SongPlayer.jsx
+│   └── ThemeToggle.jsx
+├── context/
+│   ├── AuthProvider.jsx
+│   ├── MusicPlayerProvider.jsx
+│   └── AuthContext.jsx
+├── pages/
+│   ├── Home.jsx
+│   ├── Login.jsx
+│   ├── MySongs.jsx
+│   ├── NotFound.jsx
+│   ├── PlaylistDetails.jsx
+│   ├── Playlists.jsx
+│   ├── Profile.jsx
+│   └── SongDetails.jsx
+├── services/
+│   └── api.js
+├── styles/
+│   ├── Card.css
+│   ├── Footer.css
+│   ├── Navbar.css
+│   ├── Player.css
+│   ├── PlaylistCard.css
+│   ├── SongCard.css
+│   ├── SongPlayer.css
+│   └── ThemeToggle.css
+└── App.js
 
 #### Cómo Ejecutar el Proyecto
 

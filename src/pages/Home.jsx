@@ -11,7 +11,7 @@ function Home() {
       <h1>Bienvenido a My Music App</h1>
       {/* Sección de playlists destacadas */}
       <div className="featured-playlists">
-        <h2>Playlists Destacadas</h2>
+        <h2>Listas  Destacadas</h2>
         {/* Listado de playlists destacadas */}
         <Card title="Top Hits" description="Los mejores éxitos del momento" /> {/* Componente Card para la playlist "Top Hits" */}
         <Card title="Chill Vibes" description="Relájate con estas canciones" /> {/* Componente Card para la playlist "Chill Vibes" */}

@@ -46,9 +46,7 @@ const SongPlayer = ({ song }) => {
 
   return (
     <div className="song-player">
-      <div className="song-info">
-        <span>{song.title}</span>
-      </div>
+      {/* Eliminamos el título de la canción en esta sección */}
       <audio ref={audioRef} src={song.song_file} controls />
       <button onClick={handlePlayPause}>
         {isCurrentSong && isPlaying ? 'Pause' : 'Play'}

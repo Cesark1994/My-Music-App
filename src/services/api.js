@@ -23,7 +23,7 @@ export const setAuthToken = (token) => {
 
 // Interceptor para añadir el token en solicitudes protegidas
 api.interceptors.request.use((config) => {
-  const protectedEndpoints = ['playlists/', 'songs/']; // Endpoints que requieren autenticación
+  const protectedEndpoints = ['playlists/', 'songs/', 'playlist-entries/']; // Endpoints que requieren autenticación
   console.log('Intercepting request:', config.url);
 
   // Si la URL de la solicitud coincide con un endpoint protegido
@@ -92,17 +92,6 @@ export const getPlaylists = async () => {
   }
 };
 
-// Función para obtener los detalles de una lista de reproducción
-export const getPlaylistDetails = async (id) => {
-  try {
-    const response = await api.get(`harmonyhub/playlists/${id}/`); // Realiza la solicitud para obtener los detalles de la lista de reproducción
-    return response.data; // Devuelve los datos de la respuesta
-  } catch (error) {
-    console.error(`Error fetching playlist details for ID ${id}:`, error.response ? error.response.data : error.message);
-    throw error; // Lanza el error para que pueda ser manejado por el llamador
-  }
-};
-
 // Función para crear una nueva lista de reproducción (requiere token)
 export const createPlaylist = async (playlistData) => {
   try {
@@ -129,7 +118,29 @@ export const updatePlaylist = async (id, playlistData) => {
   }
 };
 
-// Función para eliminar una canción (requiere token)
+// Función para eliminar una lista de reproducción (requiere token)
+export const deletePlaylist = async (id) => {
+  try {
+    const response = await api.delete(`harmonyhub/playlists/${id}/`); // Realiza la solicitud para eliminar la lista de reproducción
+    return response.data; // Devuelve los datos de la respuesta
+  } catch (error) {
+    console.error(`Error deleting playlist with ID ${id}:`, error.response ? error.response.data : error.message);
+    throw error; // Lanza el error para que pueda ser manejado por el llamador
+  }
+};
+
+// Función para buscar listas de reproducción por título
+export const searchPlaylists = async (title) => {
+  try {
+    const response = await api.get('harmonyhub/playlists/', {
+      params: { title }
+    }); // Realiza la solicitud para buscar listas de reproducción
+    return response.data.results; // Devuelve solo los resultados
+  } catch (error) {
+    console.error('Error searching playlists:', error.response ? error.response.data : error.message);
+    throw error; // Lanza el error para que pueda ser manejado por el llamador
+  }
+};
 export const deleteSong = async (id) => {
   try {
     const response = await api.delete(`harmonyhub/songs/${id}/`); // Realiza la solicitud para eliminar la canción
@@ -167,6 +178,70 @@ export const getMySongs = async (userId) => {
   } catch (error) {
     console.error('Error fetching user songs:', error.response ? error.response.data : error.message);
     throw error; // Lanza el error para que pueda ser manejado por el llamador
+  }
+};
+
+export const getPlaylistDetails = async (id, authtoken) => {
+  try {
+    const response = await fetch(`https://sandbox.academiadevelopers.com/harmonyhub/playlists/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${authtoken}`,
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch playlist details: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error in getPlaylistDetails:', error);
+    throw error;
+  }
+};
+
+// Función para buscar canciones por título
+export const searchSongs = async (title) => {
+  try {
+    const response = await api.get('/harmonyhub/songs/', {
+      params: { title }
+    });
+    return response.data.results; // Asegúrate de devolver solo los resultados
+  } catch (error) {
+    console.error('Error searching songs:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+};
+
+// Función para agregar una canción a una lista de reproducción
+export const addSongToPlaylist = async (playlistId, songId, authtoken) => {
+  try {
+    const response = await api.post(`/harmonyhub/playlist-entries/`, {
+      playlist: playlistId,
+      song: songId
+    }, {
+      headers: {
+        'Authorization': `Bearer ${authtoken}`
+      }
+    });
+    console.log(`Song ${songId} added to playlist ${playlistId}:`, response.data);
+    return response.data;
+  } catch (error) {
+    console.error(`Error adding song to playlist ${playlistId}:`, error.response ? error.response.data : error.message);
+    throw error;
+  }
+};
+
+// Función para eliminar una canción de una lista de reproducción
+export const removeSongFromPlaylist = async (playlistId, songId) => {
+  try {
+    const response = await api.post(`/harmonyhub/playlist-entries/${playlistId}/remove_song/`, { song_id: songId });
+    console.log(`Song ${songId} removed from playlist ${playlistId}:`, response.data);
+    return response.data;
+  } catch (error) {
+    console.error(`Error removing song from playlist ${playlistId}:`, error.response ? error.response.data : error.message);
+    throw error;
   }
 };
 
