@@ -1,0 +1,40 @@
+/* Estilos para el modal */
+.modal {
+    display: flex; /* Usar flexbox para centrar el contenido */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    position: fixed; /* Fijar el modal en la pantalla */
+    z-index: 1; /* Asegurar que el modal esté por encima de otros elementos */
+    left: 0; /* Alinear a la izquierda */
+    top: 0; /* Alinear en la parte superior */
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    height: 100%; /* Ocupa todo el alto de la pantalla */
+    overflow: auto; /* Permitir desplazamiento si el contenido es grande */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+}
+  
+/* Estilos para el contenido del modal */
+.modal-content {
+    background-color: #fefefe; /* Fondo blanco */
+    margin: auto; /* Centrar el contenido automáticamente */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #888; /* Borde gris */
+    width: 80%; /* Ocupa el 80% del ancho del contenedor */
+    max-width: 500px; /* Ancho máximo de 500px */
+}
+  
+/* Estilos para el botón de cerrar */
+.close {
+    color: #aaa; /* Color gris claro */
+    float: right; /* Alinear a la derecha */
+    font-size: 28px; /* Tamaño de fuente grande */
+    font-weight: bold; /* Fuente en negrita */
+}
+  
+/* Estilos para el botón de cerrar al pasar el ratón o enfocarlo */
+.close:hover,
+.close:focus {
+    color: black; /* Cambiar el color a negro */
+    text-decoration: none; /* Sin subrayado */
+    cursor: pointer; /* Cambiar el cursor a puntero */
+}

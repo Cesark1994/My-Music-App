@@ -1,25 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useMusicPlayer } from '../context/MusicPlayerProvider';
 import '../styles/SongPlayer.css';
 
 const SongPlayer = ({ song }) => {
   const { currentSong, playSong, pauseSong, isPlaying } = useMusicPlayer();
   const audioRef = useRef(null);
-  const [isCurrentSong, setIsCurrentSong] = useState(false);
-
-  useEffect(() => {
-    if (song && currentSong) {
-      setIsCurrentSong(currentSong.id === song.id);
-    } else {
-      setIsCurrentSong(false);
-    }
-  }, [currentSong, song]);
+  
+  const isCurrentSong = song && currentSong && currentSong.id === song.id;
 
   useEffect(() => {
     if (audioRef.current) {
       if (isCurrentSong && isPlaying) {
         audioRef.current.play().catch((error) => {
-          console.error('Error playing the audio:', error);
+          console.error('Error reproduciendo el audio:', error);
         });
       } else {
         audioRef.current.pause();
@@ -29,18 +22,14 @@ const SongPlayer = ({ song }) => {
 
   const handlePlayPause = () => {
     if (isCurrentSong) {
-      if (isPlaying) {
-        pauseSong();
-      } else {
-        playSong(song);
-      }
+      isPlaying ? pauseSong() : playSong(song);
     } else {
       playSong(song);
     }
   };
 
   if (!song || !song.id) {
-    console.error('No valid song provided');
+    console.error('No se proporcionó una canción válida');
     return null;
   }
 

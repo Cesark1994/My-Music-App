@@ -43,12 +43,13 @@ function Login() {
                                             minHeight: '100vh', 
                                             display: 'flex', 
                                             justifyContent: 'center', 
-                                            alignItems: 'center' }}>
+                                            alignItems: 'center',
+                                            marginTop: '-50px'}}>
             <div className="columns is-centered"style={{
-                    border: '2px solid #1DB954',
+                    border: '5px double #1DB954',
                     borderRadius: '10px',
                     padding: '30px',
-                    maxWidth: '325px',
+                    maxWidth: '320px',
                     width: '100%'
                 }}>
                 <div className="column is-4">
@@ -64,7 +65,10 @@ function Login() {
                                     name="username"
                                     ref={usernameRef}
                                     required
-                                    style={{ width: '100%', padding: '0.5em', marginBottom: '1em', fontWeight: 'bold'}}
+                                    style={{ width: '100%', padding: '0.5em', 
+                                        marginBottom: '1em', fontWeight: 'bold',
+                                        border: '3px solid #1DB954',
+                                        borderRadius: '15px'}}
                                     placeholder="nombre de usuario"
                                 />
                                 <span className="icon is-small is-left">
@@ -82,7 +86,10 @@ function Login() {
                                     name="password"
                                     ref={passwordRef}
                                     required
-                                    style={{ width: '100%', padding: '0.5em', marginBottom: '1em', fontWeight: 'bold'}}
+                                    style={{ width: '100%', padding: '0.5em',
+                                         marginBottom: '1em', fontWeight: 'bold',
+                                         border: '3px solid #1DB954',
+                                         borderRadius: '15px'}}
                                     placeholder="contraseña"
                                 />
                                 <span
@@ -96,7 +103,7 @@ function Login() {
                                 <button
                                     type="submit"
                                     className="button is-primary is-fullwidth"
-                                    style={{ width: '100%', backgroundColor: '#1DB954',
+                                    style={{ width: '105%', backgroundColor: '#1DB954',
                                         fontWeight: 'bold',color: '#000000', padding: '0.75em', 
                                         marginBottom: '1em',borderRadius: '50px',
                                         boxSizing: 'border-box'}}>

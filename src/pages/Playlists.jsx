@@ -55,10 +55,30 @@ function Playlists() {
           type="text" 
           value={newPlaylistName}
           onChange={(e) => setNewPlaylistName(e.target.value)}
-          placeholder="Nombre de la nueva lista de reproducción" 
+          placeholder="Nombre de nueva lista reproducción"
+          style={{
+            borderRadius: '20px',
+            padding: '10px 15px',
+            border: '1px solid #1DB954',
+            outline: 'none',
+            backgroundColor: '#fff',
+            color: '#000',
+            width: '20%',
+            fontWeight: 'bold',
+            boxSizing: 'border-box',
+          }} 
         />
         {/* Botón para crear la nueva playlist */}
-        <button onClick={handleCreatePlaylist}>Crear</button>
+        <button onClick={handleCreatePlaylist}
+                style={{ 
+                borderRadius: '20px',
+                padding: '10px 20px',
+                backgroundColor: '#1DB954',
+                color: '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 'bold',}}
+        >Crear</button>
       </div>
       <ul>
         {/* Mapea las playlists y renderiza cada una en un elemento de lista */}

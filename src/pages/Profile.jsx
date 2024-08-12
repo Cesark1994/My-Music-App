@@ -100,7 +100,7 @@ function Profile() {
         </button>
         <button onClick={() => navigate('/mysongs')} style={{ backgroundColor: '#1DB954', color: '#fff', padding: '10px', border: 'none', borderRadius: '5px', marginLeft: '10px' }}>
           Mis Canciones
-        </button>
+        </button> 
       </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <ul>
