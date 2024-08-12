@@ -1,13 +1,18 @@
 .home {
     text-align: center;
     padding: 20px;
+    background-image: url('https://img.freepik.com/vector-gratis/notas-musicales-fondo-frecuencia-ecualizador-ondas-sonido_1017-31225.jpg');
+    background-size: cover; /* Cubre todo el contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat;
   }
   
   .home h1 {
     font-size: 2.5em;
+    text-align: center;
   }
   
   .home p {
     font-size: 1.2em;
-  }
+  } 
   

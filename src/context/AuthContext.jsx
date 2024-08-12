@@ -1,16 +1,14 @@
-import { createContext, useReducer, useContext } from "react"; // Importa createContext, useReducer y useContext desde React
-import { useLocation, useNavigate } from "react-router-dom"; // Importa useLocation y useNavigate desde react-router-dom
+import { createContext, useReducer, useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-// Crea el contexto de autenticación con un estado inicial vacío y acciones vacías
 const AuthContext = createContext({
-    state: {}, // Estado inicial vacío
-    actions: {}, // Acciones iniciales vacías
+    state: {},
+    actions: {},
 });
 
-// Define las acciones disponibles para el reducer de autenticación
 const ACTIONS = {
-    LOGIN: "LOGIN", // Acción para iniciar sesión
-    LOGOUT: "LOGOUT", // Acción para cerrar sesión
+    LOGIN: "LOGIN",
+    LOGOUT: "LOGOUT",
 };
 
 function reducer(state, action) {
@@ -19,12 +17,14 @@ function reducer(state, action) {
             return {
                 ...state,
                 token: action.payload.token,
+                user_id: action.payload.user_id, // Añadir user_id al estado
                 isAuthenticated: true,
             };
         case ACTIONS.LOGOUT:
             return {
                 isAuthenticated: false,
                 token: null,
+                user_id: null, // Resetear user_id
             };
         default:
             return state;
@@ -34,21 +34,24 @@ function reducer(state, action) {
 function AuthProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, {
         token: localStorage.getItem("authToken"),
+        user_id: localStorage.getItem("user_id"), // Obtener user_id del localStorage
         isAuthenticated: !!localStorage.getItem("authToken"),
     });
     const navigate = useNavigate();
     const location = useLocation();
 
     const actions = {
-        login: ({ token }) => {
-            dispatch({ type: ACTIONS.LOGIN, payload: { token } });
+        login: ({ token, user_id }) => {
+            dispatch({ type: ACTIONS.LOGIN, payload: { token, user_id } });
             localStorage.setItem("authToken", token);
+            localStorage.setItem("user_id", user_id); // Guardar user_id en localStorage
             const origin = location.state?.from?.pathname || "/";
             navigate(origin);
         },
         logout: () => {
             dispatch({ type: ACTIONS.LOGOUT });
             localStorage.removeItem("authToken");
+            localStorage.removeItem("user_id"); // Eliminar user_id de localStorage
             navigate("/");
         },
     };

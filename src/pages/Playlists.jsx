@@ -100,10 +100,21 @@ function Playlists() {
           type="text" 
           value={newPlaylistName}
           onChange={(e) => setNewPlaylistName(e.target.value)}
-          placeholder="Nombre de la nueva lista de reproducción" 
+          placeholder="Nombre de nueva lista reproducción"
+          style={{
+            borderRadius: '20px',
+            padding: '10px 15px',
+            border: '1px solid #1DB954',
+            outline: 'none',
+            backgroundColor: '#fff',
+            color: '#000',
+            width: '20%',
+            fontWeight: 'bold',
+            boxSizing: 'border-box',
+          }} 
         />
+        {/* Botón para crear la nueva playlist */}
         <button onClick={handleCreatePlaylist}>Crear</button>
-        <button onClick={handleCancel}>Cancelar</button>
       </div>
       <form onSubmit={handleSearch}>
         <input 
