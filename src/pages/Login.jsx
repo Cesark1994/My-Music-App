@@ -1,62 +1,53 @@
-import React, { useRef, useState } from "react"; // Importa React y los hooks useRef y useState
-import { useAuth } from "../context/AuthProvider"; // Importa el hook useAuth desde el proveedor de contexto AuthProvider
+import { useRef, useState } from "react";
+import { useAuth } from '../context/AuthProvider'; 
+import React from 'react';
 
-// Define el componente funcional Login
 function Login() {
-    // Crea referencias para los campos de nombre de usuario y contraseña
-    const usernameRef = useRef(null);
-    const passwordRef = useRef(null);
-    // Define el estado local para manejar errores y el estado de carga
+    const usernameRef = useRef("");
+    const passwordRef = useRef("");
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Obtiene la función login del contexto de autenticación
-    const { login } = useAuth();
+    const { login } = useAuth("actions");
 
-    // Maneja el envío del formulario
-    const handleSubmit = async (event) => {
-        event.preventDefault(); // Previene el comportamiento predeterminado del formulario
-        if (!isLoading) { // Verifica si no está en estado de carga
-            setIsLoading(true); // Establece el estado de carga a verdadero
+    async function handleSubmit(event) {
+        event.preventDefault();
+        const username = usernameRef.current.value;
+        const password = passwordRef.current.value;
 
-            // Obtiene los valores de los campos de nombre de usuario y contraseña
-            const username = usernameRef.current.value;
-            const password = passwordRef.current.value;
-
-            try {
-                // Intenta iniciar sesión con los valores proporcionados
-                await login(username, password);
-                setIsError(false); // Establece el estado de error a falso si el inicio de sesión es exitoso
-            } catch (error) {
-                console.error("Error al iniciar sesión", error); // Muestra el error en la consola
-                setIsError(true); // Establece el estado de error a verdadero si ocurre un error
-            } finally {
-                setIsLoading(false); // Establece el estado de carga a falso al finalizar
-            }
+        if (!username || typeof username !== 'string') {
+            console.error('Username is required and must be a valid string.');
+            setIsError(true);
+            return;
         }
-    };
+
+        if (!password || typeof password !== 'string') {
+            console.error('Password is required and must be a valid string.');
+            setIsError(true);
+            return;
+        }
+
+        setIsLoading(true);
+        setIsError(false);
+
+        try {
+            await login(username, password);
+        } catch (error) {
+            console.error('Error during login:', error);
+            setIsError(true);
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     return (
-        // Sección principal del componente Login con estilos en línea
-        <section className="section" style={{ backgroundColor: '#191414',
-                                            color: '#1DB954', 
-                                            minHeight: '100vh', 
-                                            display: 'flex', 
-                                            justifyContent: 'center', 
-                                            alignItems: 'center',
-                                            marginTop: '-50px'}}>
-            <div className="columns is-centered"style={{
-                    border: '5px double #1DB954',
-                    borderRadius: '10px',
-                    padding: '30px',
-                    maxWidth: '320px',
-                    width: '100%'
-                }}>
-                <div className="column is-4">
-                    {/* Formulario de inicio de sesión */}
-                    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-                        <div className="field">
-                            <label htmlFor="username" style={{ fontWeight: 'bold' }}>Nombre de usuario</label>
+        <section className="login-section" style={styles.section}>
+            <div className="login-container" style={styles.container}>
+                <div className="login-card" style={styles.card}>
+                    <h1 style={styles.title}>Iniciar Sesión</h1>
+                    <form onSubmit={handleSubmit}>
+                        <div className="field" style={styles.field}>
+                            <label htmlFor="username" style={styles.label}>Nombre de usuario:</label>
                             <div className="control has-icons-left">
                                 <input
                                     className="input"
@@ -64,20 +55,15 @@ function Login() {
                                     id="username"
                                     name="username"
                                     ref={usernameRef}
-                                    required
-                                    style={{ width: '100%', padding: '0.5em', 
-                                        marginBottom: '1em', fontWeight: 'bold',
-                                        border: '3px solid #1DB954',
-                                        borderRadius: '15px'}}
-                                    placeholder="nombre de usuario"
+                                    style={styles.input}
                                 />
-                                <span className="icon is-small is-left">
+                                <span className="icon is-small is-left" style={styles.icon}>
                                     <i className="fas fa-user"></i>
                                 </span>
                             </div>
                         </div>
-                        <div className="field">
-                            <label htmlFor="password"style={{ fontWeight: 'bold' }}>Contraseña</label>
+                        <div className="field" style={styles.field}>
+                            <label htmlFor="password" style={styles.label}>Contraseña:</label>
                             <div className="control has-icons-left">
                                 <input
                                     className="input"
@@ -85,38 +71,23 @@ function Login() {
                                     id="password"
                                     name="password"
                                     ref={passwordRef}
-                                    required
-                                    style={{ width: '100%', padding: '0.5em',
-                                         marginBottom: '1em', fontWeight: 'bold',
-                                         border: '3px solid #1DB954',
-                                         borderRadius: '15px'}}
-                                    placeholder="contraseña"
+                                    style={styles.input}
                                 />
-                                <span
-                                className="icon is-small is-left">
+                                <span className="icon is-small is-left" style={styles.icon}>
                                     <i className="fas fa-lock"></i>
                                 </span>
                             </div>
                         </div>
-                        <div className="field">
+                        <div className="field" style={styles.field}>
                             <div className="control">
                                 <button
                                     type="submit"
                                     className="button is-primary is-fullwidth"
-                                    style={{ width: '105%', backgroundColor: '#1DB954',
-                                        fontWeight: 'bold',color: '#000000', padding: '0.75em', 
-                                        marginBottom: '1em',borderRadius: '50px',
-                                        boxSizing: 'border-box'}}>
-                                    Iniciar sesión
-                                    <span
-                                className="icon is-small is-left">
-                                    <i className="fas fa-lock"></i>
-                                </span>
+                                    style={styles.button}
+                                >
+                                    {isLoading ? "Cargando..." : "Enviar"}
                                 </button>
-                                {/* Muestra un mensaje de carga si isLoading es verdadero */}
-                                {isLoading && <p>Cargando...</p>}
-                                {/* Muestra un mensaje de error si isError es verdadero */}
-                                {isError && <p style={{ color: 'red' }}>Error: Credenciales inválidas.</p>}
+                                {isError && <p style={styles.errorText}>Error al cargar los datos.</p>}
                             </div>
                         </div>
                     </form>
@@ -126,4 +97,79 @@ function Login() {
     );
 }
 
-export default Login; // Exporta el componente Login como el valor predeterminado del módulo
+export default Login;
+
+const styles = {
+    section: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        backgroundColor: '#121212', // Fondo oscuro
+        fontFamily: "'Poppins', sans-serif",
+    },
+    container: {
+        maxWidth: '400px',
+        width: '100%',
+        padding: '20px',
+        boxSizing: 'border-box',
+    },
+    card: {
+        backgroundColor: '#1e1e1e', // Fondo de la tarjeta oscuro
+        borderRadius: '10px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Sombra más intensa
+        padding: '40px 30px',
+    },
+    title: {
+        fontSize: '24px',
+        fontWeight: '600',
+        marginBottom: '20px',
+        color: '#ffffff', // Texto claro
+        textAlign: 'center',
+    },
+    field: {
+        marginBottom: '20px',
+    },
+    label: {
+        fontSize: '14px',
+        fontWeight: '500',
+        color: '#a0a0a0', // Color gris claro para las etiquetas
+    },
+    input: {
+        width: '100%',
+        padding: '10px 15px',
+        fontSize: '16px',
+        borderRadius: '5px',
+        border: '1px solid #444', // Borde oscuro
+        backgroundColor: '#2e2e2e', // Fondo oscuro para los inputs
+        color: '#ffffff', // Texto claro
+        marginTop: '5px',
+        boxSizing: 'border-box',
+    },
+    icon: {
+        position: 'absolute',
+        left: '10px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        color: '#a0a0a0', // Color gris claro para los iconos
+    },
+    button: {
+        backgroundColor: '#1DB954',
+        color: '#ffffff',
+        padding: '10px 20px',
+        fontSize: '16px',
+        fontWeight: '500',
+        borderRadius: '5px',
+        border: 'none',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s',
+    },
+    buttonHover: {
+        backgroundColor: '#17a848',
+    },
+    errorText: {
+        color: '#ff4d4d',
+        marginTop: '10px',
+        textAlign: 'center',
+    },
+};

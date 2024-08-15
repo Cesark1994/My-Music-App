@@ -39,17 +39,53 @@ api.interceptors.request.use((config) => {
   return config; // Devuelve la configuración de la solicitud
 });
 
-// Función para autenticar y obtener el token
+// Función para obtener los datos del perfil del usuario autenticado
+export const getProfileData = async (token) => {
+  try {
+    const response = await api.get('users/profiles/profile_data/', {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching profile data:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+};
+
+// api.js
 export const login = async (username, password) => {
   try {
-    const response = await api.post('api-auth/', { username, password }); // Realiza la solicitud de autenticación
-    const { token } = response.data; // Obtiene el token de la respuesta
-    setAuthToken(token); // Establece el token en los encabezados
-    localStorage.setItem('authToken', token); // Guarda el token en el almacenamiento local
-    return { token }; // Devuelve el token
+    if (!username || typeof username !== 'string') {
+      throw new Error('Username is required and must be a valid string.');
+    }
+    if (!password || typeof password !== 'string') {
+      throw new Error('Password is required and must be a valid string.');
+    }
+
+    const response = await axios.post('https://sandbox.academiadevelopers.com/api-auth/', {
+      username,
+      password,
+    });
+
+    const { token } = response.data;
+    localStorage.setItem('authToken', token);
+
+    const profileData = await getProfileData(token);
+    localStorage.setItem('user__id', profileData.user__id);
+    localStorage.setItem('userProfile', JSON.stringify(profileData));
+
+    return { token, user__id: profileData.user__id, profileData };
   } catch (error) {
-    console.error('Error during login:', error.response ? error.response.data : error.message);
-    throw error; // Lanza el error para que pueda ser manejado por el llamador
+    if (error.response) {
+      console.error('Error during login:', error.response.data);
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+    } else {
+      console.error('Error setting up request:', error.message);
+    }
+    throw error;
   }
 };
 
@@ -57,6 +93,8 @@ export const login = async (username, password) => {
 export const logout = () => {
   setAuthToken(null); // Elimina el token de los encabezados
   localStorage.removeItem('authToken'); // Elimina el token del almacenamiento local
+  localStorage.removeItem('user__Id'); // Elimina el user__id del almacenamiento local
+  localStorage.removeItem('userProfile'); // Elimina los datos del perfil del almacenamiento local
 };
 
 // Función para obtener todas las canciones (sin necesidad de token)
@@ -141,6 +179,7 @@ export const searchPlaylists = async (title) => {
     throw error; // Lanza el error para que pueda ser manejado por el llamador
   }
 };
+
 export const deleteSong = async (id) => {
   try {
     const response = await api.delete(`harmonyhub/songs/${id}/`); // Realiza la solicitud para eliminar la canción

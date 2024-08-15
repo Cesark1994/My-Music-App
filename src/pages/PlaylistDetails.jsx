@@ -1,23 +1,23 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getPlaylistDetails, getSongs, addSongToPlaylist, removeSongFromPlaylist, searchSongs } from '../services/api';
 import SongCard from '../components/SongCard';
 import Player from '../components/Player';
 import '../styles/PlaylistDetails.css';
 
-function PlaylistDetails({ authtoken, userId }) { // Asegúrate de que userId se pasa como prop
-  const { id } = useParams(); // Obtiene el parámetro de la URL
-  const [playlist, setPlaylist] = useState(null); // Estado para almacenar los detalles de la playlist
-  const [songs, setSongs] = useState([]); // Estado para almacenar las canciones
-  const [searchResults, setSearchResults] = useState([]); // Estado para almacenar los resultados de búsqueda
-  const [searchTerm, setSearchTerm] = useState(''); // Estado para almacenar el término de búsqueda
-  const [currentSong, setCurrentSong] = useState(null); // Estado para almacenar la canción actual
-  const [error, setError] = useState(''); // Estado para almacenar errores
-  const [loading, setLoading] = useState(false); // Estado para manejar el estado de carga
+function PlaylistDetails({ authtoken, userId }) {
+  const { id } = useParams();
+  const [playlist, setPlaylist] = useState(null);
+  const [songs, setSongs] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentSong, setCurrentSong] = useState(null);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Función para obtener los detalles de la playlist
     const fetchPlaylist = async () => {
       try {
         const data = await getPlaylistDetails(id, authtoken);
@@ -31,7 +31,6 @@ function PlaylistDetails({ authtoken, userId }) { // Asegúrate de que userId se
       }
     };
 
-    // Función para obtener las canciones
     const fetchSongs = async () => {
       try {
         const data = await getSongs(authtoken);
@@ -43,14 +42,13 @@ function PlaylistDetails({ authtoken, userId }) { // Asegúrate de que userId se
     };
 
     if (id) {
-      fetchPlaylist(); // Llama a la función para obtener los detalles de la playlist
-      fetchSongs(); // Llama a la función para obtener las canciones
+      fetchPlaylist();
+      fetchSongs();
     } else {
       setError('ID de la playlist no proporcionado.');
     }
-  }, [id, authtoken]); // Ejecuta el efecto cuando cambian id o authtoken
+  }, [id, authtoken]);
 
-  // Función para manejar la búsqueda de canciones
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -70,11 +68,10 @@ function PlaylistDetails({ authtoken, userId }) { // Asegúrate de que userId se
     }
   };
 
-  // Función para manejar la adición de una canción a la playlist
   const handleAddSong = async (songId) => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('authToken'); // Obtén el token del almacenamiento local
+      const token = localStorage.getItem('authToken');
       if (!token) {
         throw new Error('No se encontró el token de autenticación.');
       }
@@ -85,7 +82,7 @@ function PlaylistDetails({ authtoken, userId }) { // Asegúrate de que userId se
         owner: userId
       }, {
         headers: {
-          'Authorization': `Token ${token}` // Asegúrate de que el token se envía en los encabezados
+          'Authorization': `Token ${token}`
         }
       });
   
@@ -99,7 +96,6 @@ function PlaylistDetails({ authtoken, userId }) { // Asegúrate de que userId se
     }
   };
 
-  // Función para manejar la eliminación de una canción de la playlist
   const handleRemoveSong = async (songId) => {
     try {
       await removeSongFromPlaylist(id, songId, authtoken);
@@ -111,27 +107,60 @@ function PlaylistDetails({ authtoken, userId }) { // Asegúrate de que userId se
     }
   };
 
-  // Función para manejar la reproducción de una canción
   const handlePlay = (song) => {
     setCurrentSong(song);
   };
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   if (loading) {
-    return <p>Loading...</p>; // Muestra un mensaje de carga si está cargando
+    return <p>Loading...</p>;
   }
 
-  if (!playlist) return <p>Loading...</p>; // Muestra un mensaje de carga si no hay playlist
+  if (!playlist) return <p>Loading...</p>;
 
   return (
-    <div className="playlist-details">
-      <h1>{playlist.name}</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Muestra un mensaje de error si hay un error */}
+    <div className="playlist-details" style={{ backgroundColor: '#191414', color: '#1DB954', minHeight: '100vh', padding: '20px' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h1>{playlist.name}</h1>
+        <button 
+          onClick={handleGoBack}
+          style={{
+            backgroundColor: '#1DB954',
+            color: '#fff',
+            padding: '10px 20px',
+            fontSize: '16px',
+            borderRadius: '20px',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'background-color 0.3s',
+          }}
+        >
+          Página Anterior
+        </button>
+      </header>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <div className="playlist-songs">
         {playlist.songs && playlist.songs.length > 0 ? (
           playlist.songs.map((song) => (
-            <div key={song.id}>
+            <div key={song.id} style={{ marginBottom: '10px', backgroundColor: '#333', padding: '10px', borderRadius: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <SongCard song={song} onPlay={() => handlePlay(song)} />
-              <button onClick={() => handleRemoveSong(song.id)}>Eliminar</button>
+              <button 
+                onClick={() => handleRemoveSong(song.id)}
+                style={{
+                  backgroundColor: '#ff4d4d',
+                  border: 'none',
+                  padding: '5px 10px',
+                  color: '#fff',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.3s',
+                }}
+              >
+                Eliminar
+              </button>
             </div>
           ))
         ) : (
@@ -139,24 +168,78 @@ function PlaylistDetails({ authtoken, userId }) { // Asegúrate de que userId se
         )}
       </div>
       {currentSong && (
-        <Player song={currentSong} /> // Muestra el reproductor si hay una canción actual
+        <Player song={currentSong} />
       )}
-      <h2>Agregar Canciones</h2>
-      <div className="search-bar">
+      <h2 style={{ marginTop: '20px' }}>Agregar Canciones</h2>
+      <form onSubmit={handleSearch} style={{ marginBottom: '20px', display: 'flex', alignItems: 'center' }}>
         <input 
           type="text" 
           placeholder="Buscar por nombre..." 
           value={searchTerm} 
           onChange={(e) => setSearchTerm(e.target.value)} 
+          style={{
+            borderRadius: '20px',
+            padding: '10px 15px',
+            border: '1px solid #1DB954',
+            outline: 'none',
+            backgroundColor: '#fff',
+            color: '#000',
+            width: '70%',
+            fontWeight: 'bold',
+            boxSizing: 'border-box',
+            marginRight: '10px',
+          }}
         />
-        <button onClick={handleSearch}>Buscar</button>
-      </div>
+        <button 
+          type="submit"
+          style={{
+            backgroundColor: '#1DB954',
+            color: '#fff',
+            padding: '10px 20px',
+            fontSize: '16px',
+            borderRadius: '20px',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'background-color 0.3s',
+          }}
+        >
+          Buscar
+        </button>
+      </form>
       <div className="search-results">
         {searchResults.map((song) => (
-          <div key={song.id} className="search-result-item">
+          <div key={song.id} className="search-result-item" style={{ marginBottom: '10px', backgroundColor: '#333', padding: '10px', borderRadius: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <p>{song.title} - {song.artist_name}</p>
-            <button onClick={() => handleAddSong(song.id)}>Agregar a la Playlist</button>
-            <button onClick={() => handlePlay(song)}>Reproducir</button>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button 
+                onClick={() => handleAddSong(song.id)}
+                style={{
+                  backgroundColor: '#1DB954',
+                  border: 'none',
+                  padding: '5px 10px',
+                  color: '#fff',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.3s',
+                }}
+              >
+                Agregar a la Playlist
+              </button>
+              <button 
+                onClick={() => handlePlay(song)}
+                style={{
+                  backgroundColor: '#007BFF',
+                  border: 'none',
+                  padding: '5px 10px',
+                  color: '#fff',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.3s',
+                }}
+              >
+                Reproducir
+              </button>
+            </div>
           </div>
         ))}
       </div>

@@ -17,14 +17,14 @@ function reducer(state, action) {
             return {
                 ...state,
                 token: action.payload.token,
-                user_id: action.payload.user_id, // Añadir user_id al estado
+                user__id: action.payload.user__id,
                 isAuthenticated: true,
             };
         case ACTIONS.LOGOUT:
             return {
                 isAuthenticated: false,
                 token: null,
-                user_id: null, // Resetear user_id
+                user__id: null,
             };
         default:
             return state;
@@ -34,24 +34,24 @@ function reducer(state, action) {
 function AuthProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, {
         token: localStorage.getItem("authToken"),
-        user_id: localStorage.getItem("user_id"), // Obtener user_id del localStorage
+        user__id: localStorage.getItem("user__id"),
         isAuthenticated: !!localStorage.getItem("authToken"),
     });
     const navigate = useNavigate();
     const location = useLocation();
 
     const actions = {
-        login: ({ token, user_id }) => {
-            dispatch({ type: ACTIONS.LOGIN, payload: { token, user_id } });
+        login: ({ token, user__id }) => {
+            dispatch({ type: ACTIONS.LOGIN, payload: { token, user__id } });
             localStorage.setItem("authToken", token);
-            localStorage.setItem("user_id", user_id); // Guardar user_id en localStorage
+            localStorage.setItem("user__id", user__id);
             const origin = location.state?.from?.pathname || "/";
             navigate(origin);
         },
         logout: () => {
             dispatch({ type: ACTIONS.LOGOUT });
             localStorage.removeItem("authToken");
-            localStorage.removeItem("user_id"); // Eliminar user_id de localStorage
+            localStorage.removeItem("user__id");
             navigate("/");
         },
     };

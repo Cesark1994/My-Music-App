@@ -6,52 +6,54 @@ import { useAuth } from '../context/AuthProvider';
 import '../styles/Profile.css';
 
 function Profile() {
-  // Estado para almacenar las canciones
   const [songs, setSongs] = useState([]);
-  // Estado para almacenar errores
   const [error, setError] = useState('');
-  // Estado para almacenar el archivo seleccionado
   const [file, setFile] = useState(null);
-  // Estado para almacenar el título de la canción
   const [title, setTitle] = useState('');
-  // Estado para controlar la visibilidad del modal
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Estado para almacenar la consulta de búsqueda
   const [searchQuery, setSearchQuery] = useState('');
-  // Estado para controlar el estado de carga
   const [loading, setLoading] = useState(false);
-  // Obtener la autenticación del contexto
+  const [user, setUser] = useState(null);
   const { auth } = useAuth();
-  // Hook para la navegación
   const navigate = useNavigate();
 
-  // Efecto para obtener las canciones al montar el componente
   useEffect(() => {
     const fetchSongs = async () => {
       try {
+        setLoading(true);
         const data = await getSongs();
         setSongs(data);
       } catch (error) {
         setError('Error al obtener las canciones.');
         console.error('Error fetching songs:', error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchSongs();
   }, []);
 
-  // Manejar la eliminación de una canción
+  useEffect(() => {
+    const userData = localStorage.getItem('userProfile');
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      setUser(parsedUser);
+    }
+  }, []);
+
   const handleDelete = async (id) => {
     try {
+      setLoading(true);
       await deleteSong(id);
       setSongs(songs.filter((song) => song.id !== id));
-      window.location.reload();
     } catch (error) {
       setError('Error al eliminar la canción.');
       console.error('Error deleting song:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Manejar la selección de un archivo
   const handleFileSelect = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
@@ -60,7 +62,6 @@ function Profile() {
     }
   };
 
-  // Manejar la subida de una canción
   const handleUpload = async () => {
     if (!file) {
       setError('No se ha seleccionado ningún archivo.');
@@ -73,26 +74,25 @@ function Profile() {
     }
 
     try {
+      setLoading(true);
       await uploadSong({ title, file });
       const data = await getSongs();
       setSongs(data);
-      setError('¡Canción subida con éxito!');
       setIsModalOpen(false);
-      window.location.reload();
     } catch (error) {
       console.error('Error al subir la canción:', error);
       setError('Error al subir la canción.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Manejar la cancelación de la subida
   const handleCancel = () => {
     setFile(null);
     setTitle('');
     setIsModalOpen(false);
   };
 
-  // Manejar la búsqueda de canciones
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -114,11 +114,31 @@ function Profile() {
 
   return (
     <div style={{ backgroundColor: '#191414', color: '#1DB954', minHeight: '100vh', padding: '20px' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', position: 'relative' }}>
         <h1>Canciones</h1>
+        {user && (
+          <div style={{ 
+            color: '#fff', 
+            textAlign: 'right', 
+            backgroundColor: '#282828', 
+            padding: '15px', 
+            borderRadius: '10px', 
+            boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', 
+            position: 'absolute', 
+            top: '-100px', 
+            right: '0', 
+            zIndex: '1000',
+            width: '250px' 
+          }}>
+            <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 'bold' }}>Perfil de Usuario</h2>
+            <p style={{ margin: '5px 0' }}><strong>Nombre:</strong> {user.first_name} {user.last_name}</p>
+            <p style={{ margin: '5px 0' }}><strong>Email:</strong> {user.email}</p>
+            <p style={{ margin: '5px 0' }}><strong>Username:</strong> {user.username}</p>
+          </div>
+        )}
         <button
           onClick={() => document.getElementById('audioUpload').click()}
-          style={{ backgroundColor: '#1DB954', color: '#fff', padding: '10px', border: 'none', borderRadius: '5px' }}
+          style={{ backgroundColor: '#1DB954', color: '#fff', padding: '10px', border: 'none', borderRadius: '5px', marginLeft: '15px', marginTop: '80px' }}
         >
           Nueva Canción
         </button>
@@ -150,6 +170,8 @@ function Profile() {
           Buscar Canciones
         </button>
       </form>
+      {loading && <p style={{ color: '#fff' }}>Cargando...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <ul>
         {songs.map((song) => (
           <li key={song.id} style={{ marginBottom: '10px', backgroundColor: '#333', padding: '10px', borderRadius: '5px', display: 'flex', alignItems: 'center' }}>
@@ -184,7 +206,6 @@ function Profile() {
           </div>
         </div>
       )}
-      {error && <p style={{ color: 'red', marginTop: '20px' }}>{error}</p>}
     </div>
   );
 }
